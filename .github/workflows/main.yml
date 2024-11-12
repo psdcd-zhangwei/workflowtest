@@ -49,6 +49,10 @@ jobs:
     needs: [buildjava,buildswagger]
     runs-on: ubuntu-latest
     steps: 
+    - run: cd main
+    - run: ls
+    - run: cd swagger-test
+    - run: ls
     - name: run jar file
       run: nohup java -jar main/swagger-test/target/swagger-test-1.0.0.jar &
     - name: get json file

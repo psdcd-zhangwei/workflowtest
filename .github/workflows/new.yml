@@ -27,11 +27,13 @@ jobs:
         cache: maven
     - name: Build with Maven
       run: mvn --file main/swagger-test/pom.xml install
+    - name: run jar file
+      run: nohup java -jar main/swagger-test/target/swagger-test-1.0.0.jar &
     - name: Upload artifact for next job
       uses: actions/upload-artifact@main
       with:
         name: jarfile
-        path: main/swagger-test/target/swagger-test-1.0.0.jar
+        path: main/swagger-test/target/
   buildswagger:
     runs-on: ubuntu-latest
     steps:

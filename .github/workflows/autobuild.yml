@@ -1,11 +1,11 @@
-name: Auto Build Java
+name: Auto Build And Deploy
 
 on: 
-  # push:
-  #   branches:
-  #     - master
-  #   paths:
-  #     - swagger-test/src/main/**
+  push:
+    branches:
+      - master
+    paths:
+      - swagger-test/src/main/**
   workflow_dispatch:
 
 permissions:

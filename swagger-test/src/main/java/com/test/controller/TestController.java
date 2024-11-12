@@ -15,12 +15,12 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
 
-@Tag(name = "テストController", description = "テストdescription")
+@Tag(name = "テストController", description = "１番目テストdescription")
 @RestController
 @RequestMapping("test")
 public class TestController {
 
-	@Operation(summary = "テストGET2", description = "GET方式でRequest")
+	@Operation(summary = "テストGETメッソド", description = "GET方式でRequest")
     @ApiResponse(responseCode = "200", description = "Request成功")
     @ApiResponse(responseCode = "403", description = "登録情報なし或いは登録情報無効の場合")
 	@GetMapping("hello")

@@ -39,7 +39,7 @@ jobs:
     - name: get json file             #访问springdoc中swagger-ui文档接口，下载json文件
       run: curl -o temp/swagger.json http://127.0.0.1:8765/v3/api-docs
     - name: Upload artifact for next job #使用upload-artifact上传生成的json，给下一个job使用
-      uses: actions/upload-artifact@main
+      uses: actions/upload-artifact@v4
       with:
         name: jsonfile
         path: temp
@@ -55,7 +55,7 @@ jobs:
     - name: Modify Initializer.js       #修改swagger-initializer.js，替换使用的json文件
       run: sed -i 's$"https:\/\/petstore\.swagger\.io\/v2\/swagger\.json"$new URL\(location\)\.searchParams\.get\("q"\) \|\| "swagger\.json"$g' swagger-ui/dist/swagger-initializer.js
     - name: Upload artifact for next job #使用upload-artifact上传生成的json，给下一个job使用
-      uses: actions/upload-artifact@main
+      uses: actions/upload-artifact@v4
       with:
         name: swagger-ui
         path: swagger-ui/dist
@@ -67,12 +67,12 @@ jobs:
       url: ${{ steps.deployment.outputs.page_url }}swagger-ui-java  #访问环境的url
     steps: 
     - name: Download artifact from buildjava job    #下载取得的json文件
-      uses: actions/download-artifact@main
+      uses: actions/download-artifact@v4
       with:
         name: jsonfile
         path: swagger-temp/swagger-ui-java
     - name: Download artifact from buildswagger job #下载修改后的swagger-ui静态资源文件
-      uses: actions/download-artifact@main
+      uses: actions/download-artifact@v4
       with:
         name: swagger-ui
         path: swagger-temp/swagger-ui-java

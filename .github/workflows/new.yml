@@ -46,7 +46,7 @@ jobs:
         ref: 'v5.2.0'
         path: swagger-ui
     - name: Modify Initializer.js
-      run: sed -i 's/"https://petstore.swagger.io/v2/swagger.json"/new URL\(location\).searchParams.get\("q"\) \|\| "swagger.json"/g' swagger-ui/dist/swagger-initializer.js
+      run: sed -i 's$"https://petstore.swagger.io/v2/swagger.json"/new URL\(location\).searchParams.get\("q"\) \|\| "swagger.json"$g' swagger-ui/dist/swagger-initializer.js
     - name: Upload artifact for next job
       uses: actions/upload-artifact@main
       with:

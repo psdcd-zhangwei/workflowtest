@@ -30,13 +30,13 @@ jobs:
         java-version: '17'
         distribution: 'temurin'
         cache: maven                  #使用maven缓存
-    - name: Build with Maven
+    - name: Build with Maven          #通过maven编译
       run: mvn --file main/swagger-test/pom.xml install
-    - name: run jar file
+    - name: run jar file              #运行编译后的jar文件
       run: nohup java -jar main/swagger-test/target/swagger-test-1.0.0.jar &
-    - name: make dir
+    - name: make dir                  #创建temp文件夹，保存取得的json文件
       run: mkdir -p temp
-    - name: get json file
+    - name: get json file             #访问springdoc中swagger-ui文档接口，下载json文件
       run: curl -o temp/swagger.json http://127.0.0.1:8765/v3/api-docs
     - name: Upload artifact for next job #使用upload-artifact上传生成的json，给下一个job使用
       uses: actions/upload-artifact@main
@@ -46,46 +46,42 @@ jobs:
   buildswagger:
     runs-on: ubuntu-latest
     steps:
-    - name: Checkout source
-      uses: actions/checkout@v4
-      with: 
-        path: main
-    - name: Checkout swagger-ui
+    - name: Checkout swagger-ui       #checkout swagger-ui仓库,获取dist下的静态资源
       uses: actions/checkout@v4
       with:
         repository: swagger-api/swagger-ui
         ref: 'v5.2.0'
         path: swagger-ui
-    - name: Modify Initializer.js
+    - name: Modify Initializer.js       #修改swagger-initializer.js，替换使用的json文件
       run: sed -i 's$"https:\/\/petstore\.swagger\.io\/v2\/swagger\.json"$new URL\(location\)\.searchParams\.get\("q"\) \|\| "swagger\.json"$g' swagger-ui/dist/swagger-initializer.js
-    - name: Upload artifact for next job
+    - name: Upload artifact for next job #使用upload-artifact上传生成的json，给下一个job使用
       uses: actions/upload-artifact@main
       with:
         name: swagger-ui
         path: swagger-ui/dist
   makejsonAndDeploy: 
-    needs: [buildjava,buildswagger]
+    needs: [buildjava,buildswagger]       #需要前两个job执行后才能执行
     runs-on: ubuntu-latest
     environment:
-      name: github-pages-swagger-ui-java
-      url: ${{ steps.deployment.outputs.page_url }}swagger-ui-java
+      name: github-pages-swagger-ui-java   #定义环境名称
+      url: ${{ steps.deployment.outputs.page_url }}swagger-ui-java  #访问环境的url
     steps: 
-    - name: Download artifact from buildjava job
+    - name: Download artifact from buildjava job    #下载取得的json文件
       uses: actions/download-artifact@main
       with:
         name: jsonfile
         path: swagger-temp/swagger-ui-java
-    - name: Download artifact from buildswagger job
+    - name: Download artifact from buildswagger job #下载修改后的swagger-ui静态资源文件
       uses: actions/download-artifact@main
       with:
         name: swagger-ui
         path: swagger-temp/swagger-ui-java
-    - name: Setup Pages
+    - name: Setup Pages                              #配置使用github-pages
       uses: actions/configure-pages@v4
-    - name: Upload artifact
+    - name: Upload artifact                          #将静态资源上传至github-pages服务器
       uses: actions/upload-pages-artifact@v3
       with:
         path: 'swagger-temp'
-    - name: Deploy to GitHub Pages
+    - name: Deploy to GitHub Pages                    #部署github-pages
       id: deployment
       uses: actions/deploy-pages@v4

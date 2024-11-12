@@ -3,7 +3,7 @@ name: Auto Build Java
 on: 
   push:
     branches:
-      - master
+      - main
     paths:
       - swagger-test/src/main/**
   workflow_dispatch:

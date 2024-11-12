@@ -49,6 +49,8 @@ jobs:
     needs: [buildjava,buildswagger]
     runs-on: ubuntu-latest
     steps: 
+    - run: cd main/cmd
+    - run: ls
     - name: run jar file
       run: nohup sh main/cmd/start.sh &
     - name: get json file

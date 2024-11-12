@@ -31,7 +31,7 @@ jobs:
         distribution: 'temurin'
         cache: maven                  #使用maven缓存
     - name: Build with Maven          #通过maven编译
-      run: mvn --file main/swagger-test/pom.xml install
+      run: mvn --file main/swagger-test/pom.xml package
     - name: run jar file              #运行编译后的jar文件
       run: nohup java -jar main/swagger-test/target/swagger-test-1.0.0.jar &
     - name: make dir                  #创建temp文件夹，保存取得的json文件

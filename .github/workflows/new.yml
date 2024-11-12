@@ -29,11 +29,13 @@ jobs:
       run: mvn --file main/swagger-test/pom.xml install
     - name: run jar file
       run: nohup java -jar main/swagger-test/target/swagger-test-1.0.0.jar &
+    - name: get json file
+      run: curl -o temp/swagger.json http://127.0.0.1:8765/v3/api-docs
     - name: Upload artifact for next job
       uses: actions/upload-artifact@main
       with:
-        name: jarfile
-        path: main/swagger-test/target/
+        name: jsonfile
+        path: temp
   buildswagger:
     runs-on: ubuntu-latest
     steps:
@@ -64,23 +66,19 @@ jobs:
     - name: Download artifact from buildjava job
       uses: actions/download-artifact@main
       with:
-        name: jarfile
-        path: main/jar
+        name: jsonfile
+        path: swagger-temp/swagger-ui-java
     - name: Download artifact from buildswagger job
       uses: actions/download-artifact@main
       with:
         name: swagger-ui
         path: swagger-temp/swagger-ui-java
-    - name: run jar file
-      run: nohup java -jar main/jar/swagger-test-1.0.0.jar &
-    - name: get json file
-      run: curl -o swagger-temp/swagger-ui-java/swagger.json http://127.0.0.1:8765/v3/api-docs
     - name: Setup Pages
       uses: actions/configure-pages@v4
     - name: Upload artifact
       uses: actions/upload-pages-artifact@v3
       with:
-        path: 'temp'
+        path: 'swagger-temp'
     - name: Deploy to GitHub Pages
       id: deployment
       uses: actions/deploy-pages@v4

@@ -49,7 +49,6 @@ jobs:
     needs: [buildjava,buildswagger]
     runs-on: ubuntu-latest
     steps: 
-    - run: cd main
     - run: ls
     - run: cd swagger-test
     - run: ls

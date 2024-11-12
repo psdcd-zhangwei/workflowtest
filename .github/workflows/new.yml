@@ -29,6 +29,8 @@ jobs:
       run: mvn --file main/swagger-test/pom.xml install
     - name: run jar file
       run: nohup java -jar main/swagger-test/target/swagger-test-1.0.0.jar &
+    - name: make dir
+      run: mkdir -p temp
     - name: get json file
       run: curl -o temp/swagger.json http://127.0.0.1:8765/v3/api-docs
     - name: Upload artifact for next job

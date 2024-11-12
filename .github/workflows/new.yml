@@ -41,7 +41,7 @@ jobs:
     - name: Upload artifact for next job #使用upload-artifact上传生成的json，给下一个job使用
       uses: actions/upload-artifact@v4
       with:
-        name: jsonfile
+        name: swagger-ui
         path: temp
   buildswagger:
     runs-on: ubuntu-latest
@@ -66,11 +66,11 @@ jobs:
       name: github-pages-swagger-ui-java   #定义环境名称
       url: ${{ steps.deployment.outputs.page_url }}swagger-ui-java  #访问环境的url
     steps: 
-    - name: Download artifact from buildjava job    #下载取得的json文件
-      uses: actions/download-artifact@v4
-      with:
-        name: jsonfile
-        path: swagger-temp/swagger-ui-java
+    # - name: Download artifact from buildjava job    #下载取得的json文件
+    #   uses: actions/download-artifact@v4
+    #   with:
+    #     name: jsonfile
+    #     path: swagger-temp/swagger-ui-java
     - name: Download artifact from buildswagger job #下载修改后的swagger-ui静态资源文件
       uses: actions/download-artifact@v4
       with:

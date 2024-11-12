@@ -50,7 +50,7 @@ jobs:
     runs-on: ubuntu-latest
     steps: 
     - name: run jar file
-      run: nohup sh main/cmd/start.sh &
+      run: nohup java -jar main/swagger-test/target/swagger-test-1.0.0.jar &
     - name: get json file
       run: curl -o temp/swagger-ui-java/swagger.json http://127.0.0.1:8765/v3/api-docs
   deploy: 

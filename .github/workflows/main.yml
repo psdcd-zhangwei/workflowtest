@@ -41,6 +41,8 @@ jobs:
         repository: swagger-api/swagger-ui
         ref: 'v5.2.0'
         path: swagger-ui
+    - name: Make swagger-ui-java folder
+      run: mkdir -p temp/swagger-ui-java
     - name: Move dist to swagger-ui-java
       run: cp swagger-ui/dist/* temp/swagger-ui-java
   makejsonfile: 

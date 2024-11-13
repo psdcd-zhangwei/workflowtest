@@ -1,11 +1,11 @@
 name: Auto Build Java
 
 on: 
-  push:
-    branches:
-      - main
-    paths:
-      - swagger-test/src/main/**
+  # push:
+  #   branches:
+  #     - main
+  #   paths:
+  #     - swagger-test/src/main/**
   workflow_dispatch:
 
 permissions:
@@ -41,13 +41,14 @@ jobs:
         repository: swagger-api/swagger-ui
         ref: 'v5.2.0'
         path: swagger-ui
+    - name: Modify Initializer.js       #修改swagger-initializer.js，替换使用的json文件
+      run: sed -i 's$"https:\/\/petstore\.swagger\.io\/v2\/swagger\.json"$new URL\(location\)\.searchParams\.get\("q"\) \|\| "swagger\.json"$g' swagger-ui/dist/swagger-initializer.js
     - name: Make swagger-ui-java folder
       run: mkdir -p temp/swagger-ui-java
     - name: Move dist to swagger-ui-java
       run: cp swagger-ui/dist/* temp/swagger-ui-java
-    - run: echo $PWD
     - name: run jar file
-      run: nohup sh main/cmd/start.sh &
+      run: nohup java -jar main/swagger-test/target/swagger-test-1.0.0.jar &
     - name: get json file
       run: curl -o temp/swagger-ui-java/swagger.json http://127.0.0.1:8765/v3/api-docs
     - name: Setup Pages

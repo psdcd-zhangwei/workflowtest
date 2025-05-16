@@ -60,3 +60,22 @@ jobs:
     - name: Deploy to GitHub Pages
       id: deployment
       uses: actions/deploy-pages@v4
+    - name: JUnit report with Maven     #mavenでJUnit reportを作成
+      # if: always() 
+      run: mvn -f main/swagger-test/pom.xml clean test surefire-report:report jacoco:report
+    - name: Upload java Build results
+      uses: actions/upload-artifact@v4
+      with:
+        name: publish-results
+        path: |
+          backend/target/*.jar
+    - name: Upload java other-documents results
+      # if: always() 
+      uses: actions/upload-artifact@v4
+      with:
+        name: other-documents
+        path: |
+          jar
+          main/swagger-test/target/reports
+          main/swagger-test/target/site
+          

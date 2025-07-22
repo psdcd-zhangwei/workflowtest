@@ -10,6 +10,8 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
+        with: 
+          path: main
 
       - name: Setup Java
         uses: actions/setup-java@v4    #设置java环境

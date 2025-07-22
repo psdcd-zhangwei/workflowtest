@@ -91,27 +91,15 @@
 				</configuration>
 			</plugin>
 			<plugin>
-			    <groupId>org.openapitools</groupId>
-			    <artifactId>openapi-generator-maven-plugin</artifactId>
-			    <version>7.13.0</version>
+			    <groupId>org.springdoc</groupId>
+			    <artifactId>springdoc-openapi-maven-plugin</artifactId>
+			    <version>1.1.9</version>
 			    <executions>
 			        <execution>
-			            <id>generate-openapi-from-java-annotations</id>
 			            <goals>
-			                <goal>generate</goal>
+			                <goal>open-api-doc</goal>
 			            </goals>
-			            <configuration>
-			                <generatorName>openapi</generatorName>
-			                <inputSpec>src/main/java</inputSpec>
-			                <output>${project.build.directory}/swagger.json</output>
-			                <configOptions>
-			                    <sourceDirs>src/main/java</sourceDirs>
-			                    <processors>
-			                        <processor>io.swagger.v3.core.jackson.Processor</processor>
-			                    </processors>
-			                    <skipValidation>true</skipValidation>
-			                </configOptions>
-			            </configuration>
+			            <phase>process-classes</phase>
 			        </execution>
 			    </executions>
 			</plugin>

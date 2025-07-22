@@ -20,10 +20,10 @@ jobs:
 
       - name: Generate OpenAPI Docs
         run: |
-          mvn clean openapi:generate
+          mvn --file main/swagger-test/pom.xml clean openapi:generate
 
       - name: Upload OpenAPI JSON
         uses: actions/upload-artifact@v4
         with:
           name: openapi-docs
-          path: target/swagger.json
+          path: main/swagger-test/target/swagger.json

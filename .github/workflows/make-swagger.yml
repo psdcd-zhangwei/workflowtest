@@ -18,20 +18,15 @@ jobs:
           distribution: 'temurin'
           cache: maven                  #使用maven缓存
 
-      - name: Generate OpenAPI Spec
+      - name: Generate OpenAPI
         run: |
-          mvn clean compile -DskipTests
-          ls -la target/openapi/ # 验证文件存在
-
-      - name: Generate HTML Docs
-        uses: openapitools/openapi-generator-cli@v2
-        with:
-          generator-name: html
-          input-spec: target/openapi/openapi.json
-          output: generated-docs
+          # 使用 OpenAPI Generator 扫描代码生成文档
+          docker run --rm -v $(pwd):/app -w /app openapitools/openapi-generator-cli generate \
+            -i src/main/java/ -g spring \
+            -o docs/openapi.json
 
       - name: Upload Documentation
         uses: actions/upload-artifact@v3
         with:
           name: api-docs
-          path: generated-docs
+          path: docs

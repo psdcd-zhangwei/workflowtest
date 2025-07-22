@@ -18,15 +18,18 @@ jobs:
           distribution: 'temurin'
           cache: maven                  #使用maven缓存
 
-      - name: Generate OpenAPI
+      - name: Generate OpenAPI spec
         run: |
-          # 使用 OpenAPI Generator 扫描代码生成文档
-          docker run --rm -v $(pwd):/app -w /app openapitools/openapi-generator-cli generate \
-            -i swagger-test/src/main/java/ -g spring \
-            -o docs/openapi.json
-
-      - name: Upload Documentation
-        uses: actions/upload-artifact@v4
+          ./mvnw org.openapitools:openapi-generator-maven-plugin:generate \
+            -DgeneratorName=spring \
+            -Doutput=./swagger.json \
+            -DinputSpec=swagger-test/src/main/resources/openapi.json \
+            -DskipValidateSpec=true \
+            -DapiTests=false \
+            -DmodelTests=false
+          
+      - name: Upload artifact
+        uses: actions/upload-artifact@v3
         with:
-          name: api-docs
-          path: docs
+          name: swagger-docs
+          path: swagger.json

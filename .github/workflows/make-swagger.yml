@@ -10,8 +10,6 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
-        with: 
-          path: main
 
       - name: Setup Java
         uses: actions/setup-java@v4    #设置java环境
@@ -20,11 +18,20 @@ jobs:
           distribution: 'temurin'
           cache: maven                  #使用maven缓存
 
-      - name: Generate OpenAPI Docs
-        run: mvn --file main/swagger-test/pom.xml clean process-classes
+      - name: Generate OpenAPI Spec
+        run: |
+          mvn clean compile -DskipTests
+          ls -la target/openapi/ # 验证文件存在
 
-      - name: Upload OpenAPI JSON
-        uses: actions/upload-artifact@v4
+      - name: Generate HTML Docs
+        uses: openapitools/openapi-generator-cli@v2
         with:
-          name: openapi-docs
-          path: main/swagger-test/target/swagger.json
+          generator-name: html
+          input-spec: target/openapi/openapi.json
+          output: generated-docs
+
+      - name: Upload Documentation
+        uses: actions/upload-artifact@v3
+        with:
+          name: api-docs
+          path: generated-docs

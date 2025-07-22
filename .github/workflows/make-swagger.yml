@@ -20,10 +20,11 @@ jobs:
 
       - name: Generate OpenAPI spec
         run: |
+          cd swagger-test
           ./mvnw org.openapitools:openapi-generator-maven-plugin:generate \
             -DgeneratorName=spring \
             -Doutput=./swagger.json \
-            -DinputSpec=swagger-test/src/main/resources/openapi.json \
+            -DinputSpec=src/main/resources/openapi.json \
             -DskipValidateSpec=true \
             -DapiTests=false \
             -DmodelTests=false

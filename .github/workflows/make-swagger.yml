@@ -22,7 +22,7 @@ jobs:
         run: |
           # 使用 OpenAPI Generator 扫描代码生成文档
           docker run --rm -v $(pwd):/app -w /app openapitools/openapi-generator-cli generate \
-            -i src/main/java/ -g spring \
+            -i swagger-test/src/main/java/ -g spring \
             -o docs/openapi.json
 
       - name: Upload Documentation

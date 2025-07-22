@@ -90,6 +90,24 @@
 					<useDefaultDelimiters>true</useDefaultDelimiters>
 				</configuration>
 			</plugin>
+			
+			<plugin>
+		            <groupId>org.springdoc</groupId>
+		            <artifactId>springdoc-openapi-maven-plugin</artifactId>
+		            <version>1.5</version> <!-- 正确的最新版本 -->
+		            <executions>
+		                <execution>
+		                    <phase>compile</phase> <!-- 在编译阶段静态分析代码 -->
+		                    <goals>
+		                        <goal>generate</goal>
+		                    </goals>
+		                    <configuration>
+		                        <outputDir>${project.build.directory}/openapi</outputDir>
+		                        <format>json</format> <!-- 可选：json/yaml -->
+		                    </configuration>
+		                </execution>
+		            </executions>
+		        </plugin>
 		</plugins>
 	</build>
 </project>

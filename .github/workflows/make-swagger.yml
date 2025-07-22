@@ -19,8 +19,7 @@ jobs:
           cache: maven                  #使用maven缓存
 
       - name: Generate OpenAPI Docs
-        run: |
-          mvn --file main/swagger-test/pom.xml clean openapi:generate
+        run: mvn --file main/swagger-test/pom.xml clean openapi:generate
 
       - name: Upload OpenAPI JSON
         uses: actions/upload-artifact@v4

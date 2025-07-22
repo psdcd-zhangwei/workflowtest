@@ -1,0 +1,27 @@
+name: Generate OpenAPI Docs
+
+on:
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Setup JDK
+        uses: actions/setup-java@v3
+        with:
+          java-version: '17'
+
+      - name: Generate OpenAPI Docs
+        run: |
+          mvn clean openapi:generate
+
+      - name: Upload OpenAPI JSON
+        uses: actions/upload-artifact@v3
+        with:
+          name: openapi-docs
+          path: target/swagger.json

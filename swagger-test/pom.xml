@@ -90,19 +90,6 @@
 					<useDefaultDelimiters>true</useDefaultDelimiters>
 				</configuration>
 			</plugin>
-			<plugin>
-			    <groupId>org.springdoc</groupId>
-			    <artifactId>springdoc-openapi-maven-plugin</artifactId>
-			    <version>1.5</version>
-			    <executions>
-			        <execution>
-			            <goals>
-			                <goal>open-api-doc</goal>
-			            </goals>
-			            <phase>process-classes</phase>
-			        </execution>
-			    </executions>
-			</plugin>
 		</plugins>
 	</build>
 </project>

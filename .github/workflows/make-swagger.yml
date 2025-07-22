@@ -11,10 +11,12 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
-      - name: Setup JDK
-        uses: actions/setup-java@v4
+      - name: Setup Java
+        uses: actions/setup-java@v4    #设置java环境
         with:
           java-version: '17'
+          distribution: 'temurin'
+          cache: maven                  #使用maven缓存
 
       - name: Generate OpenAPI Docs
         run: |

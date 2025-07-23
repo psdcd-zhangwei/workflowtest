@@ -21,16 +21,10 @@ jobs:
       - name: Generate OpenAPI spec
         run: |
           cd swagger-test
-          ./mvnw org.openapitools:openapi-generator-maven-plugin:generate \
-            -DgeneratorName=spring \
-            -Doutput=./swagger.json \
-            -DinputSpec=src/main/resources/openapi.json \
-            -DskipValidateSpec=true \
-            -DapiTests=false \
-            -DmodelTests=false
-          
+          mvn clean compile
+          cp target/enunciate/openapi.json ./api-spec/
       - name: Upload artifact
         uses: actions/upload-artifact@v4
         with:
           name: swagger-docs
-          path: swagger.json
+          path: swagger-test/api-spec/openapi.json

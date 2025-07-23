@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<enunciate xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+           xsi:noNamespaceSchemaLocation="http://enunciate.webcohesion.com/schemas/enunciate-2.15.0.xsd">
+    
+    <!-- 应用程序基本信息 -->
+    <application title="User Management API" 
+                 description="API for managing user accounts"
+                 version="1.0.0"/>
+    
+    <!-- 指定要扫描的包 -->
+    <api-classes>
+        <include pattern="com.test.**"/>
+    </api-classes>
+    
+    <!-- 生成OpenAPI文档 -->
+    <modules>
+        <openapi file="openapi.json" title="User Management API"/>
+        
+        <!-- 可选：生成Swagger UI -->
+        <swagger file="swagger-ui" title="User Management API - Swagger UI"/>
+    </modules>
+    
+    <!-- 忽略Spring Boot应用类 -->
+    <api-ignores>
+        <include pattern="com.test.SIMApplication"/>
+    </api-ignores>
+</enunciate>
